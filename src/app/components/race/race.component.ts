@@ -15,11 +15,17 @@ export class RaceComponent implements OnInit {
 
   raceInterval: any
 
-  ponies: Poney[]
+  ponies$: Observable<Poney[]>
 
   id$: Observable<number>
 
-  race: Race
+  race: Race = {
+    id: 0,
+    name: "",
+    poneyIds: []
+  }
+
+  ponies: Poney[] = []
 
   constructor(public raceService: RaceService, private routeParams: ActivatedRoute) {}
 
@@ -36,11 +42,16 @@ export class RaceComponent implements OnInit {
     this.stopRace()
     this.raceService.resetPonies()
 
-    this.race = this.raceService.getRace(id)
+    this.raceService.getRace(id).subscribe(race => {
+      this.race = race
 
-    this.ponies = this.raceService.getPonies()
+      this.ponies$ = this.raceService.getPonies()
 
-    this.startRace()
+      this.ponies$.subscribe(ponies => {
+        this.ponies = ponies
+        this.startRace()
+      })
+    })
   }
 
   startRace(): void {

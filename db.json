@@ -1,0 +1,39 @@
+{
+  "ponies": [
+    {
+      "id": 0,
+      "name": "romain",
+      "distance": 0,
+      "img": "http://ponyracer.ninja-squad.com/assets/images/pony-purple-running.gif"
+    },
+    {
+      "id": 1,
+      "name": "emilien",
+      "distance": 0,
+      "img": "http://ponyracer.ninja-squad.com/assets/images/pony-blue-running.gif"
+    },
+    {
+      "id": 2,
+      "name": "daniele",
+      "distance": 0,
+      "img": "http://ponyracer.ninja-squad.com/assets/images/pony-green-running.gif"
+    }
+  ],
+  "races": [
+    {
+      "id": 0,
+      "name": "Tokyo",
+      "poneyIds": [0, 2]
+    },
+    {
+      "id": 1,
+      "name": "Madrid",
+      "poneyIds": [0, 1]
+    },
+    {
+      "id": 2,
+      "name": "Singapore",
+      "poneyIds": [1, 2]
+    }
+  ]
+}

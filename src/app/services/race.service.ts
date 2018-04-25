@@ -1,59 +1,50 @@
 import { Injectable } from '@angular/core';
 import Poney from '../interfaces/poney';
 import { Race } from '../interfaces/race';
+import { Observable } from 'rxjs/Observable';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class RaceService {
 
-  ponies: Poney[] = [
-    {
-      id: 0,
-      name: "romain",
-      distance: 0,
-      img: "http://ponyracer.ninja-squad.com/assets/images/pony-purple-running.gif"
-    },
-    {
-      id: 1,
-      name: "emilien",
-      distance: 0,
-      img: "http://ponyracer.ninja-squad.com/assets/images/pony-blue-running.gif"
-    },
-    {
-      id: 2,
-      name: "daniele",
-      distance: 0,
-      img: "http://ponyracer.ninja-squad.com/assets/images/pony-green-running.gif"
-    }
-  ]
+  ponies: Poney[] = []
 
-  races: Race[] = [
-    {
-      id: 0,
-      name: "Tokyo",
-      poneyIds: [0, 2]
-    },
-    {
-      id: 1,
-      name: "Madrid",
-      poneyIds: [0, 1]
-    },
-    {
-      id: 2,
-      name: "Singapore",
-      poneyIds: [1, 2]
-    }
-  ]
+  races: Race[] = []
 
-  getPonies(): Poney[] {
-    return this.ponies
+  constructor(private http: HttpClient) {}
+
+  getPonies(): Observable<Poney[]> {
+    let ponies$: Observable<Poney[]>
+
+    if (this.ponies.length) {
+      ponies$ = new Observable((observer) => {
+        observer.next(this.ponies)
+      }).map(ponies => <Poney[]>ponies)
+    } else {
+      ponies$ = this.http.get('http://localhost:3000/ponies').map(data => <Poney[]>data)
+    }
+
+    return ponies$
   }
 
-  getRaces(): Race[] {
-    return this.races
+  getRaces(): Observable<Race[]> {
+    let races$: Observable<Race[]>
+
+    if (this.races.length) {
+      races$ = new Observable((observer) => {
+        observer.next(this.races)
+      }).map(races => <Race[]>races)
+    } else {
+      races$ = this.http.get('http://localhost:3000/races').map(data => <Race[]>data)
+    }
+
+    return races$
   }
 
-  getRace(id: number): Race {
-    return this.races.find(race => race.id == id)
+  getRace(id: number): Observable<Race> {
+    return this.getRaces().map(races => {
+      return races.find(race => race.id == id)
+    })
   }
 
   resetPonies() {

@@ -14,7 +14,7 @@
     </mat-list>
     <p>Choisissez votre course</p>
     <mat-list>
-      <span *ngFor="let race of races">
+      <span *ngFor="let race of races$ | async">
         <mat-list-item>
           <button mat-button (click)="drawer.toggle()" [routerLink]="['race', race.id]">{{ race.name }}</button>
         </mat-list-item>

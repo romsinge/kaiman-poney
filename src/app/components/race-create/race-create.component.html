@@ -11,7 +11,7 @@
 
   <mat-form-field>
     <mat-select placeholder="Poneys" multiple formControlName="poneyIds">
-      <mat-option *ngFor="let poney of ponies" [value]="poney.id">
+      <mat-option *ngFor="let poney of ponies$ | async" [value]="poney.id">
         <img [src]="poney.img" />
         {{ poney.name | capitalize }}
       </mat-option>

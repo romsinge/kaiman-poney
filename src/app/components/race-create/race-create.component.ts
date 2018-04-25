@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import Poney from '../../interfaces/poney';
 import { Race } from '../../interfaces/race';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import 'rxjs/add/operator/map';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'kmn-race-create',
@@ -11,7 +13,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class RaceCreateComponent implements OnInit {
 
-  ponies: Poney[]
+  ponies$: Observable<Poney[]>
 
   race: FormGroup
 
@@ -20,16 +22,33 @@ export class RaceCreateComponent implements OnInit {
   constructor(private raceService: RaceService) { }
 
   ngOnInit() {
-    this.ponies = this.raceService.getPonies()
+    this.ponies$ = this.raceService.getPonies()
 
     this.race = new FormGroup({
-      name: new FormControl('', [Validators.required, Validators.minLength(2)]),
       poneyIds: new FormControl([], Validators.required)
     })
 
-    this.race.valueChanges.subscribe(value => {
+    this.race.addControl('name', new FormControl('', [
+      Validators.required,
+      Validators.minLength(2)
+    ]))
+
+    this.race.valueChanges
+    .subscribe(value => {
       this.color = this.getRandomColor()
     })
+  }
+
+  michelNotDaniele() {
+    return (control) => {
+      console.log(this.race.value)
+
+      if (control.value == 'Michel' && !this.race.value.poneyIds.includes(1)) {
+        return null
+      } else {
+        return { 'michelNotDaniele': true }
+      }
+    }
   }
 
   getRandomColor(): string {
