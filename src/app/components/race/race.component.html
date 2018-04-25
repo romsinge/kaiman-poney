@@ -1,0 +1,7 @@
+<kmn-poney
+*ngFor="let poney of ponies | isRacing:race.poneyIds"
+(win)="handleWin($event)"
+[poney]="poney"
+[kmnRacing]="poney"
+>
+</kmn-poney>

@@ -1,0 +1,26 @@
+
+<form novalidate (submit)="handleSubmit()" [formGroup]="race">
+  <h1>Créer une course</h1>
+  <mat-form-field>
+    <input matInput placeholder="Nom" formControlName="name" name="name" />
+    <mat-error *ngIf="race.controls.name.hasError('required')">Ce champ est requis</mat-error>
+    <mat-error *ngIf="race.controls.name.hasError('minlength')">Minimum 2 caractères</mat-error>
+  </mat-form-field>
+  
+  <br />
+
+  <mat-form-field>
+    <mat-select placeholder="Poneys" multiple formControlName="poneyIds">
+      <mat-option *ngFor="let poney of ponies" [value]="poney.id">
+        <img [src]="poney.img" />
+        {{ poney.name | capitalize }}
+      </mat-option>
+    </mat-select>
+    <mat-error *ngIf="race.controls.poneyIds.hasError('required')">Ce champ est requis</mat-error>
+  </mat-form-field>
+
+  <br />
+  <br />
+
+  <button [style.background-color]="color" [disabled]="race.invalid" mat-raised-button type="submit">Créer</button>
+</form>

@@ -1,10 +1,19 @@
+import { RaceService } from './services/race.service';
 import { Component } from '@angular/core';
+import { Race } from './interfaces/race';
 
 @Component({
-  selector: 'app-root',
+  selector: 'kmn-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'app';
+  title = 'Kaiman';
+  races: Race[]
+
+  constructor(private raceService: RaceService) {}
+
+  ngOnInit() {
+    this.races = this.raceService.getRaces()
+  }
 }
