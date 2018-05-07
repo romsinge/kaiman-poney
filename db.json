@@ -23,17 +23,42 @@
     {
       "id": 0,
       "name": "Tokyo",
-      "poneyIds": [0, 2]
+      "poneyIds": [
+        0,
+        2
+      ]
     },
     {
       "id": 1,
       "name": "Madrid",
-      "poneyIds": [0, 1]
+      "poneyIds": [
+        0,
+        1
+      ]
     },
     {
       "id": 2,
       "name": "Singapore",
-      "poneyIds": [1, 2]
+      "poneyIds": [
+        1,
+        2
+      ]
+    },
+    {
+      "poneyIds": [
+        0,
+        1
+      ],
+      "name": "Rome",
+      "id": 3
+    },
+    {
+      "poneyIds": [
+        0,
+        2
+      ],
+      "name": "New Delhi",
+      "id": 4
     }
   ]
 }

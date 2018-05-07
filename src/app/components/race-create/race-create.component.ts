@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { RaceService } from './../../services/race.service';
 import { Component, OnInit } from '@angular/core';
 import Poney from '../../interfaces/poney';
@@ -5,6 +6,7 @@ import { Race } from '../../interfaces/race';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'kmn-race-create',
@@ -19,7 +21,11 @@ export class RaceCreateComponent implements OnInit {
 
   color: string
 
-  constructor(private raceService: RaceService) { }
+  constructor(
+    private raceService: RaceService,
+    private http: HttpClient,
+    private router: Router
+  ) { }
 
   ngOnInit() {
     this.ponies$ = this.raceService.getPonies()
@@ -61,6 +67,12 @@ export class RaceCreateComponent implements OnInit {
   }
 
   handleSubmit() {
-    console.log(this.race)
+    this.http.post('http://localhost:3000/races', this.race.value).subscribe(result => {
+      console.log("Succès : ", result)
+      this.race.reset()
+      this.router.navigate(['home'])
+    }, err => {
+      console.log("Erreur : ", err)
+    })
   }
 }
